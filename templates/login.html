@@ -1,0 +1,21 @@
+{% extends "base.html"%}
+{% block title%}Login Page{% endblock %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p class = "msg" style="background-color: beige; padding: 20px; margin-top: 20px;"> {{msg}}</p>
+            {% endfor%}    
+        {% endif%}
+    {% endwith%}
+
+    <h1>Welcome to  <strong>Hoya !</strong></h1>
+
+    <form class = "lForm" action="#" method="post">
+        <p class="lElement1">
+            <input  placeholder="Username" type="text" name="nm"></p>
+        <p class="lElement2">
+            <input type="submit" value="submit"></p>
+    </form>
+{% endblock %}
