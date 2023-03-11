@@ -39,6 +39,7 @@ h1 strong {
 }
 
 .lElement1 {
+    margin: 70px;
     display:flex; 
     justify-content: center;
 }
@@ -50,7 +51,7 @@ h1 strong {
 }
 
 .lElement2 {
-    margin-top: 40px; 
+    margin-top: 70px; 
     justify-content: center; 
     display: flex; 
     justify-items: center;
@@ -63,6 +64,57 @@ h1 strong {
     border-radius: 10px; 
     text-align: left;
 }
+
+.lElement3{
+    margin-top: -40px; 
+    justify-content: center; 
+    display: flex; 
+    justify-items: center;
+}
+
+.lElement3 input {
+    padding: 15px 80px;
+    border: none; 
+    border-bottom: 2px solid navy;
+}
+
+.lElement4 {
+    margin-top: 5%; 
+    justify-content: center; 
+    display: flex; 
+    justify-items: center;
+}
+
+.lElement4 input {
+    padding: 10px 30px; 
+    background-color: rgb(255, 61, 61); 
+    border: none;
+    border-radius: 10px; 
+    text-align: left;
+}
+
+.container {
+    margin-top: 50px;
+}
+
+.Ulist {
+    margin-top: 10px; 
+    justify-content: center; 
+    display: flex; 
+    justify-items: center;
+}
+
+.Ulist p {
+    font-size: 20px;
+    padding: 0 40px;
+    
+}
+
+.Ulist p span {
+    font-weight: bold;
+    color: navy;
+}
+
 
 @keyframes hideItem {
     to {

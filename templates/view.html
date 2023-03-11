@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %} View All Users {% endblock %}
+{% block content %} 
+   <div class="container">
+    {% for item in values %}
+        <div class="Ulist"><p><span>Username: </span>{{item.name}} </p><p><span>Email: </span> {{item.email}}</p></div>
+    {% endfor %}
+    </div> 
+{% endblock %}

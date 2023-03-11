@@ -2,7 +2,7 @@
 
 from flask import Flask, redirect, url_for, render_template, request, session, flash
 from datetime import timedelta
-from flask_sqlalchemy import sqlalchemy
+from flask_sqlalchemy import SQLAlchemy
 
 #importing libraries needed 
     # flask
@@ -22,9 +22,9 @@ app.config["AQLALCHEMY_TRICK_MODIFICATIONS"] = False
 app.permanent_session_lifetime = timedelta(days=5)
 
 # initiallize the data base
-db = sqlalchemy(app) 
+db = SQLAlchemy(app) 
 
-class users(db.model):
+class users(db.Model):
     _id = db.Column("id", db.Integer, primary_key=True)
     name = db.Column(db.String(100))
     email = db.Column(db.String(100))
@@ -34,10 +34,20 @@ class users(db.model):
         self.email = email
 
 
+@app.before_first_request
+def create_tables():
+     db.create_all()
+
+
 # if the route is "sth" render sth
 @app.route("/")
 def home():
     return render_template("index.html")
+
+
+@app.route("/view")
+def view():
+    return render_template("view.html", values=users.query.all())
 
 
 # for login we use request methods like POST and GET
@@ -47,6 +57,16 @@ def login():
         session.permanent = True
         user = request.form["nm"]
         session["user"] = user
+
+        found_user = users.query.filter_by(name=user).first()
+        if found_user:
+            session["email"] = found_user.email
+        else:
+            usr = users(user, "")
+            db.session.add(usr)
+            db.session.commit()
+
+
         flash(f"{user}  have logged in!", "info")
         return redirect(url_for("user"))
 
@@ -78,6 +98,9 @@ def user():
         if request.method == "POST":
             email = request.form["email"]
             session["email"] = email
+            found_user = users.query.filter_by(name=user).first()
+            found_user.email = email
+            db.session.commit()
             flash("Email was saved !")
         else:
             if "email" in session:
@@ -89,6 +112,22 @@ def user():
         return redirect(url_for("login"))
 
 
+@app.route("/delete")
+def delete():
+    user = session["user"]
+    logout()
+    dl_user = users.query.filter_by(name=user).first()
+    if dl_user:
+        db.session.delete(dl_user)
+        db.session.commit()
+    else:
+        flash("You have nothing to delete !", "info")
+
+
+    return redirect("/")
+
 if __name__ == "__main__":
-    db.create_all()
     app.run(debug=True)
+
+
+""" - Create a sign in page and signing functionality """
